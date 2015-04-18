@@ -1,0 +1,11 @@
+$ meteor mongo --url stockx.meteor.com
+	mongodb://client-7a982188:f424f4f9-0c34-9d90-f170-3316d0aeefbc@production-db-a2.meteor.io:27017/stockx_meteor_com
+
+
+$ mongoimport -h stockx.meteor.com --port:27017 --db meteor --collection stocks --type json --file /Users/bharat/Desktop/AllWork/self/StockX/StockData.json
+ 
+ 
+$ /Users/bharat/Desktop/AllWork/self/mongodb-osx-x86_64-3.0.2/bin/mongoimport --host production-db-a2.meteor.io --port 27017 --username client-a47d99cc --password a0aea87d-e7cc-dd74-06d2-ff7b7a124c3d --db stockx_meteor_com --collection stocks --type json --file /Users/bharat/Desktop/AllWork/self/StockX/dataImport/StockData.json --jsonArray
+
+$ /Users/bharat/Desktop/AllWork/self/mongodb-osx-x86_64-3.0.2/bin/mongoimport --host production-db-a2.meteor.io --port 27017 --username client-6ece88ac --password 3ec719b8-5b50-5af5-7f01-d4ad535ccdc9 --db stockx_meteor_com --collection stocks --type json --file /Users/bharat/Desktop/AllWork/self/StockX/dataImport/StockData.json
+

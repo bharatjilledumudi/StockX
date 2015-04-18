@@ -68,14 +68,7 @@ Package.onUse(function (api) {
   // i18n languages (must come last)
 
   api.add_files([
-    'i18n/bg.i18n.json',
-    'i18n/de.i18n.json',
-    'i18n/en.i18n.json',
-    'i18n/es.i18n.json',
-    'i18n/fr.i18n.json',
-    'i18n/it.i18n.json',
-    'i18n/tr.i18n.json',
-    'i18n/zh-CN.i18n.json'
+    'i18n/en.i18n.json'
   ], ['client', 'server']);
 
   // -------------------------------- 3. Variables to export --------------------------------

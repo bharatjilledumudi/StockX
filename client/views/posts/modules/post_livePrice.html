@@ -1,0 +1,7 @@
+<template name="postLivePrice">
+  {{#if isLiveGreater livePrice price}}
+    <div class="post-live-price-up">{{livePrice}}</div>
+  {{else}}
+    <div class="post-live-price-down">{{livePrice}}</div>
+  {{/if}}
+</template>

@@ -1,0 +1,13 @@
+<template name="postsWeekly">
+  <div class="grid">
+    {{#each weeks}}
+      {{> Template.dynamic template=before_week}}
+      <h2 class="posts-week-heading">{{formatDate start "MMMM Do"}}-{{formatDate end "MMMM Do YYYY"}}</h2>
+
+      {{> Template.dynamic template=singleWeek data=context}}
+
+      {{> Template.dynamic template=after_week}}
+    {{/each}}
+    <a class="load-more-weeks-button grid-module" href="{{loadMoreWeeksUrl}}"><span>{{_ "load_next_weeks"}}</span></a>
+  </div>
+</template>

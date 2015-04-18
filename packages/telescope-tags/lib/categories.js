@@ -3,6 +3,9 @@ categorySchema = new SimpleSchema({
   name: {
     type: String
   },
+  symbol: {
+    type: String
+  },
   description: {
     type: String,
     optional: true,
@@ -10,14 +13,11 @@ categorySchema = new SimpleSchema({
       rows: 3
     }
   },
-  order: {
-    type: Number,
-    optional: true
-  },
   slug: {
     type: String,
     optional: true,
     autoform: {
+
     }
   }
 });
@@ -49,7 +49,6 @@ Meteor.startup(function () {
 
   Meteor.methods({
     submitCategory: function(category){
-      console.log(category)
       if (!Meteor.user() || !isAdmin(Meteor.user()))
         throw new Meteor.Error(i18n.t('you_need_to_login_and_be_an_admin_to_add_a_new_category'));
       var categoryId=Categories.insert(category);
@@ -59,8 +58,8 @@ Meteor.startup(function () {
 });
 
 getPostCategories = function (post) {
-  return !!post.categories ? Categories.find({_id: {$in: post.categories}}).fetch() : [];
-}
+  return !!post.categories ? Categories.find({_id: post.categories}).fetch() : [];
+};
 
 getCategoryUrl = function(slug){
   return getSiteUrl()+'category/'+slug;

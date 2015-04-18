@@ -98,6 +98,8 @@
   "author": "Author",
   "userId": "User",
   "sorry_we_couldnt_find_any_posts": "Sorry, we couldn't find any posts.",
+  "symbol": "Symbol",
+  "companyName": "Stock Name",
 
   //Commments
   "your_comment_has_been_deleted": "Your comment has been deleted.",
@@ -245,7 +247,7 @@
   "you_dont_have_permission_to_delete_this_comment": "You don't have permission to delete this comment.",
   "you_need_to_login_or_be_invited_to_post_new_stories": "You need to login or be invited to post new stories.",
   "please_fill_in_a_headline": "Please fill in a headline",
-  "this_link_has_already_been_posted": "This link has already been posted",
+  "this_symbol_has_already_been_posted": "This Stock has already been posted",
   "sorry_you_cannot_submit_more_than": "Sorry, you cannot submit more than ",
   "posts_per_day": " posts per day",
   "someone_replied_to_your_comment_on": "Someone replied to your comment on",
@@ -260,7 +262,7 @@
   "start_posting": "Start posting.",
 
   // Translation needed (found during migration to tap:i18n)
-  "please_fill_in_a_title": "Please fill in a title",
+  "please_fill_in_a_company": "Please fill in a company name",
   "seconds_before_posting_again": " seconds before posting again",
   "upvoted": "Upvoted",
   "posted_date": "Posted Date",

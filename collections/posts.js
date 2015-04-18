@@ -30,23 +30,54 @@ postSchemaObject = {
     type: String,
     optional: true,
     autoform: {
-      editable: true,
+      editable: false,
       type: "bootstrap-url"
     }
   },
-  title: {
-    type: String,
-    optional: false,
-    autoform: {
-      editable: true
-    }
-  },
-  body: {
+  companyName: {
     type: String,
     optional: true,
     autoform: {
       editable: true,
-      rows: 5
+      placeholder: "Enter Stock Name"
+    }
+  },
+  symbol: {
+    type: String,
+    optional: true,
+    autoform: {
+      editable: true,
+      placeholder: "Enter Stock Symbol"
+    }
+  },
+  exchange: {
+    type: String,
+    optional: true,
+    autoform: {
+      omit: true
+    }
+  },
+  price: {
+    type: Number,
+    optional: true,
+    decimal: true,
+    autoform: {
+      editable: false
+    }
+  },
+  livePrice: {
+    type: Number,
+    optional: true,
+    decimal: true,
+    autoform: {
+      editable: false
+    }
+  },
+  volume: {
+    type: Number,
+    optional: true,
+    autoform: {
+      editable: false
     }
   },
   htmlBody: {
@@ -212,10 +243,10 @@ getPostProperties = function (post) {
   var postAuthor = Meteor.users.findOne(post.userId);
   var p = {
     postAuthorName : getDisplayName(postAuthor),
-    postTitle : cleanUp(post.title),
+    postCompanyName : cleanUp(post.companyName),
     profileUrl: getProfileUrlBySlugOrId(post.userId),
     postUrl: getPostPageUrl(post),
-    thumbnailUrl: post.thumbnailUrl,
+    //thumbnailUrl: post.thumbnailUrl,
     linkUrl: !!post.url ? getOutgoingUrl(post.url) : getPostPageUrl(post._id)
   };
 
@@ -254,17 +285,17 @@ getPostLink = function (post) {
 };
 
 // we need the current user so we know who to upvote the existing post as
-checkForPostsWithSameUrl = function (url, currentUser) {
+checkForPostsWithSameSymbol = function (symbol, currentUser) {
 
   // check that there are no previous posts with the same link in the past 6 months
-  var sixMonthsAgo = moment().subtract(6, 'months').toDate();
-  var postWithSameLink = Posts.findOne({url: url, postedAt: {$gte: sixMonthsAgo}});
+  var now = moment().startOf('day').toDate();
+  var postWithSameSymbol = Posts.findOne({symbol: symbol, postedAt: {$gte: now}});
 
-  if(typeof postWithSameLink !== 'undefined'){
-    upvoteItem(Posts, postWithSameLink, currentUser);
+  if(typeof postWithSameSymbol !== 'undefined'){
+    upvoteItem(Posts, postWithSameSymbol, currentUser);
 
     // note: error.details returns undefined on the client, so add post ID to reason
-    throw new Meteor.Error('603', i18n.t('this_link_has_already_been_posted') + '|' + postWithSameLink._id, postWithSameLink._id);
+    throw new Meteor.Error('603', i18n.t('this_symbol_has_already_been_posted') + '|' + postWithSameSymbol._id, postWithSameSymbol._id);
   }
 }
 
@@ -311,19 +342,28 @@ submitPost = function (post) {
   var userId = post.userId, // at this stage, a userId is expected
       user = Meteor.users.findOne(userId);
 
+  var categories = post.categories;
+      category = Categories.findOne(categories);
+      post.exchange= category.name;
+
+  var stocks = post.stockData;
+      stock = Stocks.findOne(stocks);
+      // post.companyName= stock.name;
+      // post.symbol= stock.symbol;
+
   // ------------------------------ Checks ------------------------------ //
 
   // check that a title was provided
-  if(!post.title)
-    throw new Meteor.Error(602, i18n.t('please_fill_in_a_title'));
+  if(!post.companyName)
+    throw new Meteor.Error(602, i18n.t('please_fill_in_a_company'));
 
-  // check that there are no posts with the same URL
-  if(!!post.url)
-    checkForPostsWithSameUrl(post.url, user);
+  // check that there are no posts with the same symbol
+  if(!!post.symbol)
+    checkForPostsWithSameSymbol(post.symbol, user);
 
   // ------------------------------ Properties ------------------------------ //
 
-  var defaultProperties = {
+  defaultProperties = {
     createdAt: new Date(),
     author: getDisplayNameById(userId),
     upvotes: 0,
@@ -333,6 +373,8 @@ submitPost = function (post) {
     viewCount: 0,
     baseScore: 0,
     score: 0,
+    price: 0,
+    livePrice: 0,
     inactive: false,
     sticky: false,
     status: getDefaultPostStatus()
@@ -346,7 +388,13 @@ submitPost = function (post) {
     post.postedAt = new Date();
 
   // clean up post title
-  post.title = cleanUp(post.title);
+  post.companyName = cleanUp(post.companyName);
+
+  //Get current price
+  post.price = Meteor.call('checkPrice', post.symbol, category.symbol);
+
+  //Assign current price to live price
+  post.livePrice = post.price;
 
   // ------------------------------ Callbacks ------------------------------ //
 
@@ -574,6 +622,18 @@ Meteor.methods({
 
     // delete post
     Posts.remove(postId);
+  },
+
+  checkPrice: function(symbol, exchange) {
+    try {
+          var result = HTTP.get("http://finance.yahoo.com/webservice/v1/symbols/"+symbol+"."+exchange+"/quote?format=json");
+          if(result){
+            var obj= JSON.parse(result.content)['list']['resources'][0]['resource']['fields']['price'];
+            return obj;
+          }
+    } catch (e) {
+      //do nothing
+    }
   }
 
 });

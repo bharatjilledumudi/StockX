@@ -96,11 +96,11 @@ viewsMenu = [
     route: 'posts_new',
     label: 'new',
     description: 'newest_posts'
-  },
-  {
-    route: 'posts_best',
-    label: 'best',
-    description: 'highest_ranked_posts_ever'
+  // },
+  // {
+  //   route: 'posts_best',
+  //   label: 'best',
+  //   description: 'highest_ranked_posts_ever'
   }
 ];
 
@@ -201,13 +201,13 @@ postModules = [
     order: 20
   },
   {
-    template: 'postAvatars',
+    template: 'postLivePrice',
     order: 30
   },
-  {
-    template: 'postDiscuss',
-    order: 40
-  },
+  // {
+  //   template: 'postDiscuss',
+  //   order: 40
+  // },
   {
     template: 'postActions',
     order: 50

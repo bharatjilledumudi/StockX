@@ -1,0 +1,13 @@
+<template name="singleWeekNav">
+  <div class="grid">
+    <div class="grid-block">
+    {{#if showPreviousWeek}}
+    <a href="{{previousWeekURL}}" class="prev-link">{{_ "previous_week"}}</a> |
+    {{/if}}
+    {{currentWeek}} |
+    {{#if showNextWeek}}
+    <a href="{{nextWeekURL}}" class="next-link">{{_ "next_week"}}</a>
+    {{/if}}
+    </div>
+  </div>
+</template>

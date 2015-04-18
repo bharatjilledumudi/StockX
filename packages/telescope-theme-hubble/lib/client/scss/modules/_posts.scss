@@ -120,6 +120,12 @@
 			display: none;
 		}
 	}
+	.post-live-price {
+		order: 6;
+		@include small {
+			display: none;
+		}
+	}
 	.show-actions {
 		.post-content {
 			display: none;
@@ -206,6 +212,12 @@
 		padding-right: 35px;
 	}
 	.post-avatars {
+		position: absolute;
+		right: 48px;
+		bottom: 0px;
+		padding: 8px 0px;
+	}
+	.post-live-price {
 		position: absolute;
 		right: 48px;
 		bottom: 0px;
@@ -355,6 +367,35 @@
 .post-share {
 	display: none;
 }
+
+.post-live-price-up{
+  display:inline-block;
+  font-size:16px;
+	color:#008000;
+  background:#eee;
+  padding:2px 3px 1px 3px;
+  text-transform:uppercase;
+  font-weight:bold;
+  vertical-align:middle;
+  &:hover{
+    background:$red;
+    color:white;
+  }
+}
+.post-live-price-down{
+  display:inline-block;
+  font-size:16px;
+	color:#ff0000;
+  background:#eee;
+  padding:2px 3px 1px 3px;
+  text-transform:uppercase;
+  font-weight:bold;
+  vertical-align:middle;
+  &:hover{
+    background:$red;
+    color:white;
+  }
+}
 // -------------------------------- post content --------------------------------- //
 
 .post-heading {
@@ -386,7 +427,7 @@
 .post-meta {
 	font-size: 13px;
 	color: $light-text;
-	line-height: 1.5;
+	line-height: 2;
 	@include small {
 		font-size: 11px;
 		line-height: 1.7;

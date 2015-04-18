@@ -1,0 +1,21 @@
+<template name="stocksMenu">
+  {{#if hasStocks}}
+    <div class="dropdown stocks-menu header-submodule">
+      <a class="stocks dropdown-top-level" href="/">{{_ "stocks"}}</a>
+      <div class="dropdown-menu">
+        <ul role="menu" aria-labelledby="dLabel">
+          {{#each stocks}}
+            <li>
+              <a class="dropdown-sub-level" href="{{stockLink}}">
+                <span class="stock-name menu-label">{{name}}</span>
+                <span class="stock-name menu-label">{{symbol}}</span>
+                <span class="stock-livePrice menu-label">{{exchange}}</span>
+                {{#if livePrice}}<span class="stock-livePrice menu-label">{{livePrice}}</span>{{/if}}
+              </a>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  {{/if}}
+</template>

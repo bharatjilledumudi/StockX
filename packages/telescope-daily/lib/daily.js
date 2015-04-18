@@ -1,4 +1,4 @@
-daysPerPage = 5;
+daysPerPage = 3;
 
 viewsMenu.push({
   route: 'postsDaily',

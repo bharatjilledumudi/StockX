@@ -1,15 +1,15 @@
 adminMenu.push({
   route: 'categories',
-  label: 'Categories',
+  label: 'Exchanges',
   description: 'add_and_remove_categories'
 });
 
 // push "categories" modules to postHeading
 postHeading.push({
-  template: 'postCategories',
+  template: 'postCategory',
   order: 30
 });
-  
+
 // push "categoriesMenu" template to primaryNav
 primaryNav.push({
   template: 'categoriesMenu',

@@ -48,3 +48,39 @@ AutoForm.hooks({
 
   }
 });
+
+Meteor.startup(function () {
+  Template[getTemplate('post_submit')].helpers({
+    settings: function() {
+      return {
+        position: "bottom",
+        limit: 30,
+        rules: [
+          {
+            subscription: 'autocompleteStocks',
+            collection: 'autocompleteStocks',
+            matchAll: true,
+            field: "name",
+            template: Template.post_autocomplete
+          }
+        ]
+      };
+    }
+  })
+});
+
+Template[getTemplate('post_submit')].events({
+  "autocompleteselect input": function(event, template, doc) {
+    $('input[name="companyName"]').val(doc.name);
+    $('input[name="symbol"]').val(doc.symbol);
+    $('select[name=categories] option').filter(function() { return $(this).text() == doc.exchange; }).prop('selected', true);
+  }
+  // 'click .fetch-stock': function () {
+  //     var data = $('.stockData').val();
+  //     var stocks = Stocks.findOne({name:data});
+  //     $('input[name="companyName"]').val(stocks.name);
+  //     $('input[name="symbol"]').val(stocks.symbol);
+  //     $('select[name=categories] option').filter(function() { return $(this).text() == stocks.exchange; }).prop('selected', true);
+  //     // add to database
+  // }
+});

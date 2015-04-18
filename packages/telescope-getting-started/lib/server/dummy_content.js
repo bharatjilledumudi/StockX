@@ -6,7 +6,7 @@ var createPost = function (slug, postedAt, username, thumbnail) {
   var post = {
     postedAt: postedAt,
     body: Assets.getText("content/" + slug + ".md"),
-    title: toTitleCase(slug.replace(/_/g, ' ')),
+    companyName: toTitleCase(slug.replace(/_/g, ' ')),
     dummySlug: slug,
     isDummy: true,
     userId: Meteor.users.findOne({username: username})._id
@@ -108,9 +108,9 @@ Meteor.methods({
 Meteor.startup(function () {
   // insert dummy content only if createDummyContent hasn't happened and there aren't any posts in the db
   if (!Events.findOne({name: 'createDummyContent'}) && !Posts.find().count()) {
-    createDummyUsers();
-    createDummyPosts();
-    createDummyComments();
+    //createDummyUsers();
+  //  createDummyPosts();
+  //  createDummyComments();
     logEvent({name: 'createDummyContent', unique: true, important: true});
   }
 });

@@ -1,12 +1,11 @@
-Meteor.startup(function () {
-  Template[getTemplate('postCategories')].helpers({
-    categoriesArray: function(){
-      return _.map(this.categories, function (categoryId) { // note: this.categories maybe be undefined
-        return Categories.findOne(categoryId);
-      });
-    },
-    categoryLink: function(){
-      return getCategoryUrl(this.slug);
-    }
-  });
+Template[getTemplate('postCategory')].helpers({
+  name: function(categories){
+    return Categories.findOne(this.categories).name;
+  },
+  slug: function(categories){
+    return Categories.findOne(this.categories).slug;
+  },
+  categoryLink: function(categories){
+    return getCategoryUrl(Categories.findOne(this.categories).slug);
+  }
 });

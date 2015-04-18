@@ -10,7 +10,7 @@
     </thead>
     {{#each posts}}
       <tr>
-        <td><a href="{{pathFor route='post_page' _id=_id}}">{{title}}</a></td>
+        <td><a href="{{pathFor route='post_page' _id=_id}}">{{companyName}}</a></td>
         <td>{{formatDate votedAt "MM/DD/YYYY, HH:mm"}}</td>
       </tr>
     {{/each}}

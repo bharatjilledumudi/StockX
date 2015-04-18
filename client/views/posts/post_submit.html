@@ -1,7 +1,15 @@
 <template name="post_submit">
-
   <div class="grid grid-module">
+    <div class="controls">
+      {{> inputAutocomplete settings=settings id="stockData" class="stockData" style="width: 100%;font-size: 16px;padding: 5px px;"  placeholder="Search for stocks"}}
+      <!-- <a href="#" class="fetch-stock submit btn btn-primary inline" style="position:absolute;" align="right">Fetch </a> -->
+    </div>
+    <br/>
+    <div style="text-align:center">
+      <span><h3> OR </h3></span>
+    </div>
+    <br/>
     {{> quickForm collection="Posts" id="submitPostForm" template="telescope" label-class="control-label" input-col-class="controls" type="method" meteormethod="submitPost"}}
   </div>
-  
+
 </template>

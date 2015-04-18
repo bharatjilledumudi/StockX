@@ -29,17 +29,16 @@ Package.onUse( function(api) {
   ], ['server']);
 
   api.add_files([
-    'lib/client/autoform-postthumbnail.html', 
-    'lib/client/autoform-postthumbnail.js', 
-    'lib/client/post_thumbnail.html', 
-    'lib/client/post_thumbnail.js', 
+    'lib/client/autoform-postthumbnail.html',
+    'lib/client/autoform-postthumbnail.js',
+    'lib/client/post_thumbnail.html',
+    'lib/client/post_thumbnail.js',
     'lib/client/post_thumbnail.scss',
     'lib/client/post_video.html',
     'lib/client/post_video.js'
   ], ['client']);
 
   api.add_files([
-    "i18n/en.i18n.json",
-    "i18n/fr.i18n.json"
+    "i18n/en.i18n.json"
   ], ["client", "server"]);
 });

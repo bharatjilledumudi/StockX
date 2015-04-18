@@ -1,0 +1,9 @@
+<template name="stocks">
+  <div class="grid-small grid-module dialog admin add-stock">
+    <h3>Add new stock:</h3>
+    {{> quickForm collection="Stocks" id="insertStockForm" type="insert" label-class="control-label" input-col-class="controls" template="telescope"}}
+  </div>
+  <!-- {{#each stocks}}
+    {{> UI.dynamic template=stockItem}}
+  {{/each}} -->
+</template>

@@ -1,0 +1,6 @@
+<template name="singleWeek">
+  {{#if showDateNav}}
+    {{> Template.dynamic template=singleWeekNav}}
+  {{/if}}
+  {{> Template.dynamic template=posts_list data=context}}
+</template>

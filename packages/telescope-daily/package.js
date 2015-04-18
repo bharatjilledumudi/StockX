@@ -3,10 +3,10 @@ Package.describe({summary: "Telescope daily view"});
 Package.onUse(function (api) {
 
   api.use([
-    'telescope-lib', 
-    'telescope-base', 
+    'telescope-lib',
+    'telescope-base',
     'iron:router',
-    'meteorhacks:fast-render', 
+    'meteorhacks:fast-render',
     'meteorhacks:subs-manager',
     'tap:i18n',
     'telescope-singleday',
@@ -34,12 +34,7 @@ Package.onUse(function (api) {
     ], ['client']);
 
   api.add_files([
-    "i18n/de.i18n.json",
-    "i18n/en.i18n.json",
-    "i18n/es.i18n.json",
-    "i18n/fr.i18n.json",
-    "i18n/it.i18n.json",
-    "i18n/zh-CN.i18n.json",
+    "i18n/en.i18n.json"
   ], ["client", "server"]);
 
   api.export(['PostsDailyController']);

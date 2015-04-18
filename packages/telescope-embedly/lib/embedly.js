@@ -9,7 +9,7 @@ var thumbnailProperty = {
     }
   }
 }
-addToPostSchema.push(thumbnailProperty);
+//addToPostSchema.push(thumbnailProperty);
 
 var mediaProperty = {
   propertyName: 'media',
@@ -26,7 +26,7 @@ var mediaProperty = {
 addToPostSchema.push(mediaProperty);
 
 postThumbnail.push({
-  template: 'postThumbnail', 
+  template: 'postThumbnail',
   order: 15
 });
 
