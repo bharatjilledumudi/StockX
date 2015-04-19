@@ -4,7 +4,12 @@ Template[getTemplate('postsLoadMore')].helpers({
   },
   hasPosts: function () {
     return !!this.postsCursor.count();
-  }  
+  },
+  showSubmit : function() {
+    return Router.current().location.get().path == '/' || Router.current().location.get().path.startsWith('/new')
+    || Router.current().location.get().path.startsWith('/top') || Router.current().location.get().path.startsWith('/perform')
+    || Router.current().location.get().path.startsWith('/category') || Router.current().location.get().path.startsWith('/search');
+  }
 });
 
 Template[getTemplate('postsLoadMore')].events({

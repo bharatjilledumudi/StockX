@@ -6,6 +6,11 @@
       {{/if}}
     {{else}}
       <div class="no-posts">{{_ "sorry_we_couldnt_find_any_posts"}}</div>
+      {{#if canPost}}
+        {{#if showSubmit}}
+          <a id="submit" class="submit btn header-submodule btn-primary" href="/submit">{{_ "post"}}</a>
+        {{/if}}
+      {{/if}}
     {{/if}}
   {{else}}
     <div class="loading-module">{{> spinner}}</div>
