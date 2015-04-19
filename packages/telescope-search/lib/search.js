@@ -1,8 +1,13 @@
 // push "search" template to primaryNav
-primaryNav.push({
+// primaryNav.push({
+//   template: 'search',
+//   order: 100
+// });
+heroModules.push({
   template: 'search',
-  order: 100
+  order: 1
 });
+
 
 adminMenu.push({
   route: 'searchLogs',
@@ -42,9 +47,9 @@ viewParameters.search = function (terms, baseParameters) {
   var parameters = deepExtend(true, baseParameters, {
     find: {
       $or: [
-        {title: {$regex: terms.query, $options: 'i'}},
-        {url: {$regex: terms.query, $options: 'i'}},
-        {body: {$regex: terms.query, $options: 'i'}}
+        {companyName: {$regex: terms.query, $options: 'i'}},
+        {symbol: {$regex: terms.query, $options: 'i'}},
+        {exchange: {$regex: terms.query, $options: 'i'}},
       ]
     }
   });

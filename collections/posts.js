@@ -73,6 +73,14 @@ postSchemaObject = {
       editable: false
     }
   },
+  percentChange: {
+    type: Number,
+    optional: true,
+    decimal: true,
+    autoform: {
+      editable: false
+    }
+  },
   volume: {
     type: Number,
     optional: true,
@@ -391,10 +399,11 @@ submitPost = function (post) {
   post.companyName = cleanUp(post.companyName);
 
   //Get current price
-  post.price = Meteor.call('checkPrice', post.symbol, category.symbol);
+  post.price = Meteor.call('checkPrice', post.symbol, category.symbol).toFixed(2);
 
   //Assign current price to live price
   post.livePrice = post.price;
+  post.percentChange = 0;
 
   // ------------------------------ Callbacks ------------------------------ //
 

@@ -6,12 +6,14 @@
       <tr>
         <td>Post</td>
         <td>Created At</td>
+        <td>Percentage Change</td>
       </tr>
     </thead>
     {{#each posts}}
       <tr>
-        <td><a href="{{pathFor route='post_page' _id=_id}}">{{title}}</a></td>
+        <td><a href="{{pathFor route='post_page' _id=_id}}">{{companyName}}</a></td>
         <td>{{formatDate createdAt "MM/DD/YYYY, HH:mm"}}</td>
+        <td>{{percentChange}}%</td>
       </tr>
     {{/each}}
     {{#if isReady}}

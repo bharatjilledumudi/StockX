@@ -1,0 +1,11 @@
+<template name="tabsNav">
+{{#if showTabsNav}}
+  <table>
+    <tr>
+      <td colspan="1" width="30%"><a href="{{top}}"><h3>Top</h3>{{_ "most_popular_posts"}}</a></td>
+      <td colspan="1" width="30%"><a href="{{best}}"><h3>Best</h3>{{_ "best_performing_stocks"}}</a></td>
+      <td colspan="1" width="30%"><a href="{{new}}"><h3>New</h3>{{_ "newest_posts"}}</a></td>
+    </tr>
+  </table>
+{{/if}}
+</template>

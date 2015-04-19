@@ -92,6 +92,7 @@ custom-weekly
 custom-singleweek
 custom-stock-price
 custom-stocks
+custom-tabs
 
 # Custom Packages
 mizzao:autocomplete

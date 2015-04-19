@@ -5,6 +5,7 @@
   "top": "Top",
   "new": "New",
   "best": "Best",
+  "perform": "Best",
   "digest": "Digest",
   "users": "Users",
   "settings": "Settings",
@@ -296,8 +297,9 @@
   "sign_in_sign_up_with_twitter": "Register/Sign Up with Twitter",
   "load_more": "Load More",
 
-  "most_popular_posts": "The most popular posts right now.",
-  "newest_posts": "The newest posts.",
+  "most_popular_posts": "The most popular stocks right now.",
+  "newest_posts": "The newest stocks.",
+  "best_performing_stocks": "The best performing stocks right now.",
   "highest_ranked_posts_ever": "The all-time highest-ranked posts.",
 
   "the_profile_of": "The profile of",

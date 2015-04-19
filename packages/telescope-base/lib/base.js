@@ -87,21 +87,21 @@ adminMenu = [
 
 // array containing items in the views menu
 viewsMenu = [
-  {
-    route: 'posts_top',
-    label: 'top',
-    description: 'most_popular_posts'
-  },
-  {
-    route: 'posts_new',
-    label: 'new',
-    description: 'newest_posts'
+  // {
+  //   route: 'posts_top',
+  //   label: 'top',
+  //   description: 'most_popular_posts'
+  // },
+  // {
+  //   route: 'posts_new',
+  //   label: 'new',
+  //   description: 'newest_posts'
   // },
   // {
   //   route: 'posts_best',
   //   label: 'best',
   //   description: 'highest_ranked_posts_ever'
-  }
+  //}
 ];
 
 // ------------------------------------- Views -------------------------------- //
@@ -135,6 +135,12 @@ viewParameters.new = function (terms) {
 viewParameters.best = function (terms) {
   return {
     options: {sort: {sticky: -1, baseScore: -1}}
+  };
+}
+
+viewParameters.perform = function (terms) {
+  return {
+    options: {sort: {sticky: -1, percentChange: -1}}
   };
 }
 

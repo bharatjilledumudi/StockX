@@ -22,7 +22,6 @@ Package.onUse(function (api) {
 
   api.add_files([
     'lib/stocks.js',
-    'lib/custom_fields.js',
     'lib/hooks.js',
     'package-tap.i18n'
   ], ['client', 'server']);

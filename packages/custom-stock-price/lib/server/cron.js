@@ -16,7 +16,12 @@ var addJob = function () {
           var categories = post.categories;
           var category = Categories.findOne(categories);
           var livePrice = Meteor.call('checkPrice', post.symbol, category.symbol);
-          Posts.update(post._id, { $set: { 'livePrice': livePrice}});
+          if(livePrice >= post.price) {
+            var percentChange = Math.abs(((livePrice - post.price) / post.price) * 100).toFixed(2);
+          } else {
+            var percentChange = Math.abs(((livePrice - post.price) / post.price) * 100).toFixed(2) * -1;
+          }
+          Posts.update(post._id, { $set: { 'livePrice': parseFloat(livePrice).toFixed(2), 'percentChange': percentChange}});
       });
     }
   });

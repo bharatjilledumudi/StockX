@@ -12,11 +12,11 @@ Meteor.startup(function () {
 
     getTitle: function () {
       var category = this.getCurrentCategory();
-      return category.name + ' - ' + getSetting('title', 'Telescope');
+      return category.name + ' - ' + getSetting('title', 'stockX');
     },
 
     getDescription: function () {
-      return this.getCurrentCategory().description;    
+      return this.getCurrentCategory().description;
     }
 
   });
