@@ -399,7 +399,7 @@ submitPost = function (post) {
   post.companyName = cleanUp(post.companyName);
 
   //Get current price
-  post.price = Meteor.call('checkPrice', post.symbol, category.symbol).toFixed(2);
+  post.price = Meteor.call('checkPrice', post.symbol, category.symbol);
 
   //Assign current price to live price
   post.livePrice = post.price;
@@ -638,7 +638,7 @@ Meteor.methods({
           var result = HTTP.get("http://finance.yahoo.com/webservice/v1/symbols/"+symbol+"."+exchange+"/quote?format=json");
           if(result){
             var obj= JSON.parse(result.content)['list']['resources'][0]['resource']['fields']['price'];
-            return obj;
+            return parseFloat(obj).toFixed(2);
           }
     } catch (e) {
       //do nothing

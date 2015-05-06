@@ -71,7 +71,7 @@
 	.post-upvote {
 		order: 1;
 		@include small {
-			display: none;
+			display: block;
 		}
 	}
 	.post-content {
@@ -91,7 +91,7 @@
 		flex-grow: 1;
 	}
 	.post-share {
-		order: 3;
+		display: none;
 	}
 	.post-discuss {
 		order: 7;
@@ -100,7 +100,6 @@
 			display: none;
 		}
 	}
-	.post-share,
 	.post-discuss {
 		// width: 60px;
 		text-align: center;
@@ -109,9 +108,9 @@
 		// top: -5px;
 	}
 	.post-actions {
-		order: 8;
+		order: 1;
 		@include small {
-			display: block;
+			display: none;
 		}
 	}
 	.post-avatars {
@@ -123,14 +122,13 @@
 	.post-live-price {
 		order: 6;
 		@include small {
-			display: none;
+			display: block;
 		}
 	}
 	.show-actions {
 		.post-content {
-			display: none;
+			display: block;
 		}
-		.post-share,
 		.post-discuss,
 		.post-upvote {
 			flex-grow: 1;
