@@ -1,3 +1,75 @@
+## v0.20.6 “AutoScope”
+
+* Add Extra CSS field (thanks @johnthepink!)
+* Fix security issue with Settings (thanks @jshimko!)
+* Add automatic template replacement
+
+## v0.20.5 “MinorScope”
+
+Just a couple minor bug fixes.
+
+* Changed how email template customization works (see [documentation](http://docs.telescopeapp.org/v0.20/docs/custom-templates#email-templates)).
+* Ensure email uniqueness and keep it in sync.
+* Improve profile completion screen validation & errors.
+* Generate public user properties list from schema.
+* Fixed video lightbox issue.
+* Updated Getting Started content.
+* Enforcing better URL formatting for Site URL setting.
+* Fixed notification settings.
+* Reworked user settings.
+
+## v0.20.4 “RefactorScope”
+
+See [blog](http://telescopeapp.org/blog/telescope-v020-refactorscope/) for more details. 
+
+## v0.15.1 “PageScope”
+
+* Settings now have their own `telescope-settings` package (thanks @delgermurun!).
+* Swedish translation (thanks @Alekzanther!)
+* Various fixes (thanks @azizur, @ndarilek, @kai101, @saimeunt, @Kikobeats!).
+* Added `telescope-pages` module for managing static pages. 
+
+## v0.15 “SideScope”
+
+#### Layout
+
+* Added new `postListTop` zone that only appears on post lists. 
+* Now showing tagline on every post list. 
+* Added the Side Nav layout.
+* New Admin menu layout.
+
+#### Settings
+
+* Added the Post Views setting.
+* Changed color settings names.
+* Added field for optional category image (thanks @dtsepelev!).
+
+#### SEO
+
+* Added `telescope-sitemap` package (thanks @yourcelf!).
+* Added improved SEO support (thanks @yourcelf!).
+* Added field for SEO site image.
+
+#### Other
+
+* Improved performance when loading comments for long threads (thanks @dandv!).
+* Usernames are now case and space insensitive. `John Smith`, `JohnSmith`, and `johnsmith` are now all considered to be the same username (thanks @splendido!). 
+* Now using `feedparser` instead of `htmlparser2` to parse RSS feeds (thanks @delgermurun!).
+* Now supporting RSS categories (thanks @delgermurun).
+* Refactored dropdowns into menu components.
+* New `{{{icon}}}` helper for icons, using FontAwesome.
+* New accent color customization API. 
+* Fixed various bugs (thanks @webyak, @yourcelf, @ywang28, @delgermurun!).
+* Now publishing upvoters and downvoters on single post page. 
+
+#### Internationalization
+
+* Added Arabic translation (thanks @nwabdou85!).
+* Added missing translations in Brazilian Portuguese (thanks @alanmeira!).
+* Improved French translation (thanks @klamzo!).
+* Romanian translation (thanks @razvansky!).
+* Added Dutch translation (thanks @reneras!).
+
 ## v0.14.3 “TableScope”
 
 * Implemented Reactive Table for the Users dashboard (thanks @jshimko!).
@@ -100,7 +172,7 @@
 * Added new setting to subscribe new user to mailing list automatically.
 * Added new `debug` setting.
 * `siteUrl` setting now affects `Meteor.absoluteUrl()`.
-* Added new `clog` function that only logs if `debug` setting is true.
+* Added new `Telescope.log` function that only logs if `debug` setting is true.
 * Simplified post module system, modules are not split in three zones anymore.
 * Added new `postThumbnail` hook to show Embedly thumbnail.
 * Simplified Hubble theme CSS for both desktop and mobile.

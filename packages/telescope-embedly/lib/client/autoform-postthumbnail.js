@@ -3,7 +3,7 @@ AutoForm.addInputType("bootstrap-postthumbnail", {
 });
 
 var fillEmbedlyData = function (instance) {
-  
+
   // note: the following fields are *not* in the current template
   var $urlField = $('[name="url"]');
   var $titleField = $('[name="title"]');
@@ -16,14 +16,14 @@ var fillEmbedlyData = function (instance) {
 
   if (!!url) {
     $thumbnailContainer.addClass('loading');
-    clearSeenMessages();
+    Messages.clearSeen();
     console.log('getting embedly data for '+url);
     Meteor.call('getEmbedlyData', url, function (error, data) {
       if (error) {
-        console.log(error)
-        flashMessage(error.message, 'error');
+        console.log(error);
+        Messages.flash(error.message, 'error');
         $thumbnailContainer.removeClass('loading');
-        return
+        return;
       }
       if (data) {
         // set thumbnail and fill in thumbnailUrl field
@@ -37,11 +37,11 @@ var fillEmbedlyData = function (instance) {
           $titleField.val(data.title);
         if (!$bodyField.val()) // if body field is empty, fill in body
           $bodyField.val(data.description);
-        
+
       }
     });
   }
-}
+};
 
 Template.afPostThumbnail.created = function () {
   var instance = this;
@@ -51,7 +51,7 @@ Template.afPostThumbnail.created = function () {
     if (result)
       instance.embedlyKeyExists.set(result);
   });
-}
+};
 
 Template.afPostThumbnail.helpers({
   atts: function addFormControlAtts() {
@@ -61,9 +61,9 @@ Template.afPostThumbnail.helpers({
     return atts;
   },
   style: function () {
-    var thumbnailWidth = getSetting('thumbnailWidth', 200);
-    var thumbnailHeight = getSetting('thumbnailHeight', 125);
-    return "width: "+thumbnailWidth+"px; height: "+thumbnailHeight+"px;"
+    var thumbnailWidth = Settings.get('thumbnailWidth', 200);
+    var thumbnailHeight = Settings.get('thumbnailHeight', 125);
+    return "width: "+thumbnailWidth+"px; height: "+thumbnailHeight+"px;";
   },
   embedlyKeyExists: function () {
     // haven't found a better way to do this yet…
@@ -76,11 +76,11 @@ Template.afPostThumbnail.rendered = function () {
   var instance = this;
   var $urlField = $('[name="url"]');
 
-  $urlField.change(function (e) {
+  $urlField.change(function () {
     fillEmbedlyData(instance);
   });
 
-}
+};
 
 Template.afPostThumbnail.events({
   'click .remove-thumbnail-link': function (e, t) {
@@ -92,4 +92,4 @@ Template.afPostThumbnail.events({
     e.preventDefault();
     fillEmbedlyData(instance);
   }
-})
+});

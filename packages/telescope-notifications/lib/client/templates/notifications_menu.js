@@ -1,40 +1,43 @@
-Template[getTemplate('notificationsMenu')].helpers({
-  notificationItem: function () {
-    return getTemplate('notificationItem');
-  },
-  notifications: function(){
-    return Herald.collection.find({userId: Meteor.userId(), read: false}, {sort: {timestamp: -1}});
-  },
-  hasNotifications: function () {
-    return !!Herald.collection.find({userId: Meteor.userId(), read: false}, {sort: {timestamp: -1}}).count();    
-  },
-  notificationCount: function(){
-    var notifications=Herald.collection.find({userId: Meteor.userId(), read: false}).fetch();
-    if(notifications.length==0){
-      return __('no_notifications');
-    }else if(notifications.length==1){
-      return __('1_notification');
-    }else{
-      return notifications.length+' '+__('notifications');
-    }
-  },
-  notification_class: function(){
-    var notifications=Herald.collection.find({userId: Meteor.userId(), read: false}).fetch();
-    if(notifications.length==0)
-      return 'no-notifications';
-  }
-});
+Template.notifications_menu.helpers({
+  menuLabel: function () {
+    var notificationsCount;
+    var notifications=Herald.collection.find({userId: Meteor.userId(), read: false}, {sort: {timestamp: -1}}).fetch();
 
-Template[getTemplate('notificationsMenu')].events({
-  'click .notifications-toggle': function(e){
-    e.preventDefault();
-    $('body').toggleClass('notifications-open');
+    if(notifications.length === 0){
+      notificationsCount = __('no_notifications');
+    }else if(notifications.length === 1){
+      notificationsCount = __('1_notification');
+    }else{
+      notificationsCount = notifications.length+' '+ __('notifications');
+    }
+
+    return notificationsCount;
   },
-  'click .mark-as-read': function(){
-    Meteor.call('heraldMarkAllAsRead', 
-      function(error, result){
-        error && console.log(error);
-      }
-    );
+  menuItems: function () {
+    var notifications=Herald.collection.find({userId: Meteor.userId(), read: false}, {sort: {timestamp: -1}}).fetch();
+    var markAllAsRead = [{
+      template: 'notifications_mark_as_read'
+    }];
+    var menuItems;
+    if (notifications.length) {
+      menuItems = markAllAsRead.concat(_.map(notifications, function (notification) {
+        return {
+          template: "notification_item",
+          data: notification
+        };
+      }));
+    } else {
+      menuItems = [];
+    }
+    return menuItems;
+  },
+  menuMode: function () {
+    if (!!this.mobile) {
+      return 'list';
+    } else if (Settings.get('navLayout', 'top-nav') === 'top-nav') {
+      return 'dropdown';
+    } else {
+      return 'accordion';
+    }
   }
 });

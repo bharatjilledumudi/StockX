@@ -1,4 +1,4 @@
-Template[getTemplate('postSubscribe')].helpers({
+Template.post_subscribe.helpers({
   canSubscribe: function() {
     // you cannot subscribe to your own posts
     return Meteor.userId() && this.userId !== Meteor.userId();
@@ -11,7 +11,7 @@ Template[getTemplate('postSubscribe')].helpers({
   }
 });
 
-Template[getTemplate('postSubscribe')].events({
+Template.post_subscribe.events({
   'click .subscribe-link': function(e, instance) {
     e.preventDefault();
     if (this.userId === Meteor.userId())
@@ -21,12 +21,12 @@ Template[getTemplate('postSubscribe')].events({
 
     if (!Meteor.user()) {
       Router.go('atSignIn');
-      flashMessage(i18n.t("please_log_in_first"), "info");
+      Messages.flash(i18n.t("please_log_in_first"), "info");
     }
 
     Meteor.call('subscribePost', post._id, function(error, result) {
       if (result)
-        trackEvent("post subscribed", {'_id': post._id});
+        Events.track("post subscribed", {'_id': post._id});
     });
   },
 
@@ -36,12 +36,12 @@ Template[getTemplate('postSubscribe')].events({
 
     if (!Meteor.user()) {
       Router.go('atSignIn');
-      flashMessage(i18n.t("please_log_in_first"), "info");
+      Messages.flash(i18n.t("please_log_in_first"), "info");
     }
 
     Meteor.call('unsubscribePost', post._id, function(error, result) {
       if (result)
-        trackEvent("post unsubscribed", {'_id': post._id});
+        Events.track("post unsubscribed", {'_id': post._id});
     });
   }
 });

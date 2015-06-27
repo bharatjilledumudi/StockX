@@ -1,4 +1,4 @@
-campaignSchema = new SimpleSchema({
+var campaignSchema = new SimpleSchema({
  _id: {
     type: String,
     optional: true
@@ -29,148 +29,162 @@ Campaigns = new Meteor.Collection("campaigns", {
   schema: campaignSchema
 });
 
-addToPostSchema.push(
+Posts.addField({
+  fieldName: 'scheduledAt',
+  fieldSchema: {
+    type: Date,
+    optional: true,
+    autoform: {
+      omit: true
+    }
+  }
+});
+
+Users.addField([
   {
-    propertyName: 'scheduledAt',
-    propertySchema: {
-      type: Date,
+    fieldName: 'telescope.newsletter.showBanner',
+    fieldSchema: {
+      label: 'Show banner',
+      type: Boolean,
       optional: true,
+      editableBy: ['admin', 'member'],
+      autoform: {
+        omit: true
+      }
+    }
+  },
+  {
+    fieldName: 'telescope.newsletter.subscribeToNewsletter',
+    fieldSchema: {
+      label: 'Subscribe to newsletter',
+      type: Boolean,
+      optional: true,
+      editableBy: ['admin', 'member'],
       autoform: {
         omit: true
       }
     }
   }
-);
+]);
 
 // Settings
 
-var enableNewsletter = {
-  propertyName: 'enableNewsletter',
-  propertySchema: {
-    type: Boolean,
-    optional: true,
-    autoform: {
-      group: 'newsletter',
-      instructions: 'Enable newsletter (requires restart).'
+Settings.addField([
+  {
+    fieldName: 'enableNewsletter',
+    fieldSchema: {
+      type: Boolean,
+      optional: true,
+      autoform: {
+        group: 'newsletter',
+        instructions: 'Enable newsletter (requires restart).'
+      }
+    }
+  },
+  {
+    fieldName: 'showBanner',
+    fieldSchema: {
+      type: Boolean,
+      optional: true,
+      label: 'Newsletter banner',
+      autoform: {
+        group: 'newsletter',
+        instructions: 'Show newsletter sign-up form on the front page.'
+      }
+    }
+  },
+  {
+    fieldName: "mailChimpAPIKey",
+    fieldSchema: {
+      type: String,
+      optional: true,
+      private: true,
+      autoform: {
+        group: "newsletter",
+        class: "private-field"
+      }
+    }
+  },
+  {
+    fieldName: 'mailChimpListId',
+    fieldSchema: {
+      type: String,
+      optional: true,
+      private: true,
+      autoform: {
+        group: 'newsletter',
+        instructions: 'The ID of the list you want to send to.',
+        class: "private-field"
+      }
+    }
+  },
+  {
+    fieldName: 'postsPerNewsletter',
+    fieldSchema: {
+      type: Number,
+      optional: true,
+      autoform: {
+        group: 'newsletter'
+      }
+    }
+  },
+  {
+    fieldName: 'newsletterFrequency',
+    fieldSchema: {
+      type: Number,
+      optional: true,
+      autoform: {
+        group: 'newsletter',
+        instructions: 'Defaults to once a week. Changes require restarting your app to take effect.',
+        options: [
+          {
+            value: 1,
+            label: 'Every Day'
+          },
+          {
+            value: 2,
+            label: 'Mondays, Wednesdays, Fridays'
+          },
+          {
+            value: 3,
+            label: 'Mondays & Thursdays'
+          },
+          {
+            value: 7,
+            label: 'Once a week (Mondays)'
+          }
+        ]
+      }
+    }
+  },
+  {
+    fieldName: 'newsletterTime',
+    fieldSchema: {
+      type: String,
+      optional: true,
+      defaultValue: '00:00',
+      autoform: {
+        group: 'newsletter',
+        instructions: 'Defaults to 00:00/12:00 AM. Time to send out newsletter if enabled.',
+        type: 'time'
+      }
+    }
+  },
+  {
+    fieldName: 'autoSubscribe',
+    fieldSchema: {
+      type: Boolean,
+      optional: true,
+      autoform: {
+        group: 'newsletter',
+        instructions: 'Automatically subscribe new users on sign-up.'
+      }
     }
   }
-}
-addToSettingsSchema.push(enableNewsletter);
-
-var showBanner = {
-  propertyName: 'showBanner',
-  propertySchema: {
-    type: Boolean,
-    optional: true,
-    label: 'Newsletter banner',
-    autoform: {
-      group: 'newsletter',
-      instructions: 'Show newsletter sign-up form on the front page.'
-    }
-  }
-}
-addToSettingsSchema.push(showBanner);
-
-var mailChimpAPIKey = {
-  propertyName: 'mailChimpAPIKey',
-  propertySchema: {
-    type: String,
-    optional: true,
-    autoform: {
-      group: 'newsletter',
-      private: true
-    }
-  }
-}
-addToSettingsSchema.push(mailChimpAPIKey);
-
-var mailChimpListId = {
-  propertyName: 'mailChimpListId',
-  propertySchema: {
-    type: String,
-    optional: true,
-    autoform: {
-      group: 'newsletter',
-      instructions: 'The ID of the list you want to send to.',
-      private: true
-    }
-  }
-}
-addToSettingsSchema.push(mailChimpListId);
-
-var postsPerNewsletter = {
-  propertyName: 'postsPerNewsletter',
-  propertySchema: {
-    type: Number,
-    optional: true,
-    autoform: {
-      group: 'newsletter'
-    }
-  }
-}
-addToSettingsSchema.push(postsPerNewsletter);
-
-var newsletterFrequency = {
-  propertyName: 'newsletterFrequency',
-  propertySchema: {
-    type: Number,
-    optional: true,
-    autoform: {
-      group: 'newsletter',
-      instructions: 'Defaults to once a week. Changes require restarting your app to take effect.',
-      options: [
-        {
-          value: 1,
-          label: 'Every Day'
-        },
-        {
-          value: 2,
-          label: 'Mondays, Wednesdays, Fridays'
-        },
-        {
-          value: 3,
-          label: 'Mondays & Thursdays'
-        },
-        {
-          value: 7,
-          label: 'Once a week (Mondays)'
-        }
-      ]
-    }
-  }
-}
-addToSettingsSchema.push(newsletterFrequency);
-
-var newsletterTime = {
-  propertyName: 'newsletterTime',
-  propertySchema: {
-    type: String,
-    optional: true,
-    defaultValue: '00:00',
-    autoform: {
-      group: 'newsletter',
-      instructions: 'Defaults to 00:00/12:00 AM. Time to send out newsletter if enabled.',
-      type: 'time'
-    }
-  }
-}
-addToSettingsSchema.push(newsletterTime);
-
-var autoSubscribe = {
-  propertyName: 'autoSubscribe',
-  propertySchema: {
-    type: Boolean,
-    optional: true,
-    autoform: {
-      group: 'newsletter',
-      instructions: 'Automatically subscribe new users on sign-up.'
-    }
-  }
-}
-addToSettingsSchema.push(autoSubscribe);
+]);
 
 // create new "campaign" lens for all posts from the past X days that haven't been scheduled yet
-viewParameters.campaign = function (terms) {
+Posts.views.add("campaign", function (terms) {
   return {
     find: {
       scheduledAt: {$exists: false},
@@ -180,20 +194,20 @@ viewParameters.campaign = function (terms) {
     },
     options: {sort: {sticky: -1, score: -1}}
   };
-}
+});
 
-heroModules.push({
-  template: 'newsletterBanner',
+Telescope.modules.add("hero", {
+  template: 'newsletter_banner',
   order: 10
 });
 
- function subscribeUserOnCreation (user) {
-  if (!!getSetting('autoSubscribe') && !!getEmail(user)) {
+ function subscribeUserOnProfileCompletion (user) {
+  if (!!Settings.get('autoSubscribe') && !!Users.getEmail(user)) {
     addToMailChimpList(user, false, function (error, result) {
-      console.log(error)
-      console.log(result)
+      console.log(error);
+      console.log(result);
     });
   }
   return user;
 }
-userCreatedCallbacks.push(subscribeUserOnCreation);
+Telescope.callbacks.add("profileCompletedAsync", subscribeUserOnProfileCompletion);

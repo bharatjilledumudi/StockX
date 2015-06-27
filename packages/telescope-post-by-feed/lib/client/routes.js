@@ -1,4 +1,4 @@
-adminMenu.push({
+Telescope.menuItems.add("adminMenu", {
   route: 'feeds',
   label: 'Feeds',
   description: 'import_new_posts_from_feeds'
@@ -7,11 +7,12 @@ adminMenu.push({
 Meteor.startup(function () {
 
   Router.onBeforeAction(Router._filters.isAdmin, {only: ['feeds']});
-  
+
   // RSS Urls Admin
 
   Router.route('/feeds', {
     name: 'feeds',
+    controller: Telescope.controllers.admin,
     waitOn: function() {
       return [
         Meteor.subscribe('feeds'),
@@ -19,7 +20,7 @@ Meteor.startup(function () {
         Meteor.subscribe('categories')
       ];
     },
-    template: getTemplate('feeds')
+    // template: 'feeds'
   });
 
 });

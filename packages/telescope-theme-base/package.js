@@ -1,14 +1,21 @@
-Package.describe({summary: "Telescope base theme"});
-
+Package.describe({
+  name: "telescope:theme-base",
+  summary: "Telescope base theme package",
+  version: "0.20.6",
+  git: "https://github.com/TelescopeJS/telescope-theme-base.git"
+});
 Package.onUse(function (api) {
 
-  api.use(['telescope-lib', 'telescope-base', 'fourseven:scss'], ['client', 'server']);
+  api.versionsFrom("METEOR@1.0");
+
+  api.use(['telescope:core@0.20.6']);
 
   api.addFiles(
     [
       // global
       'lib/client/scss/global/_forms.scss',
       'lib/client/scss/global/_links.scss',
+      'lib/client/scss/global/_icons.scss',
       'lib/client/scss/global/_main.scss',
       'lib/client/scss/global/_markdown.scss',
       'lib/client/scss/global/_tables.scss',
@@ -20,10 +27,10 @@ Package.onUse(function (api) {
       'lib/client/scss/includes/_mixins.scss',
 
       // specific
+      'lib/client/scss/specific/_admin.scss',
       'lib/client/scss/specific/_avatars.scss',
-      'lib/client/scss/specific/_dropdown.scss',
       'lib/client/scss/specific/_errors.scss',
-      'lib/client/scss/specific/_header.scss',
+      'lib/client/scss/specific/_nav.scss',
       'lib/client/scss/specific/_layout.scss',
       'lib/client/scss/specific/_loading.scss',
       'lib/client/scss/specific/_mobile_nav.scss',

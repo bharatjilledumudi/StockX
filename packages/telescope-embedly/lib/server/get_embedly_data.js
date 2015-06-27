@@ -1,9 +1,9 @@
 getEmbedlyData = function (url) {
-  var data = {}
+  var data = {};
   var extractBase = 'http://api.embed.ly/1/extract';
-  var embedlyKey = getSetting('embedlyKey');
-  var thumbnailWidth = getSetting('thumbnailWidth', 200);
-  var thumbnailHeight = getSetting('thumbnailHeight', 125);
+  var embedlyKey = Settings.get('embedlyKey');
+  var thumbnailWidth = Settings.get('thumbnailWidth', 200);
+  var thumbnailHeight = Settings.get('thumbnailHeight', 125);
 
   if(!embedlyKey) {
     // fail silently to still let the post be submitted as usual
@@ -12,7 +12,7 @@ getEmbedlyData = function (url) {
   }
 
   try {
-    
+
     var result = Meteor.http.get(extractBase, {
       params: {
         key: embedlyKey,
@@ -42,25 +42,8 @@ getEmbedlyData = function (url) {
 // For security reason, we use a separate server-side API call to set the media object,
 // and the thumbnail object if it hasn't already been set
 
-// note: the following function is not used because it would hold up the post submission, use next one instead
-// var addMediaOnSubmit = function (post) {
-//   if(post.url){
-//     var data = getEmbedlyData(post.url);
-//     if (!!data) {
-//       // only add a thumbnailUrl if there isn't one already
-//       if(!post.thumbnailUrl && !!data.thumbnailUrl)
-//         post.thumbnailUrl = data.thumbnailUrl
-//       // add media if necessary
-//       if(!!data.media.html)
-//         post.media = data.media
-//     }
-//   }
-//   return post;
-// }
-// postSubmitMethodCallbacks.push(addMediaOnSubmit);
-
 // Async variant that directly modifies the post object with update()
-var addMediaAfterSubmit = function (post) {
+function addMediaAfterSubmit (post) {
   var set = {};
   if(post.url){
     var data = getEmbedlyData(post.url);
@@ -76,37 +59,40 @@ var addMediaAfterSubmit = function (post) {
         set.media = data.media;
       }
     }
-    Posts.update(post._id, {$set: set});
+    // make sure set object is not empty (Embedly call could have failed)
+    if(!_.isEmpty(set)) {
+      Posts.update(post._id, {$set: set});
+    }
   }
   return post;
-}
-postAfterSubmitMethodCallbacks.push(addMediaAfterSubmit);
+};
+Telescope.callbacks.add("postSubmitAsync", addMediaAfterSubmit);
 
-// TODO: find a way to only do this is URL has actually changed?
-var updateMediaOnEdit = function (updateObject) {
-  var post = updateObject.$set
-  if(post.url){
-    var data = getEmbedlyData(post.url);
-    if(!!data && !!data.media.html)
-      updateObject.$set.media = data.media
+function updateMediaOnEdit (modifier, post) {
+  var newUrl = modifier.$set.url;
+  if(newUrl && newUrl !== post.url){
+    var data = getEmbedlyData(newUrl);
+    if(!!data && !!data.media.html) {
+      modifier.$set.media = data.media;
+    }
   }
-  return updateObject;
+  return modifier;
 }
-postEditMethodCallbacks.push(updateMediaOnEdit);
+Telescope.callbacks.add("postEdit", updateMediaOnEdit);
 
 
 Meteor.methods({
   testGetEmbedlyData: function (url) {
-    console.log(getEmbedlyData(url))
+    console.log(getEmbedlyData(url));
   },
   getEmbedlyData: function (url) {
     return getEmbedlyData(url);
   },
   embedlyKeyExists: function () {
-    return !!getSetting('embedlyKey');
+    return !!Settings.get('embedlyKey');
   },
   regenerateEmbedlyData: function (post) {
-    if (can.edit(Meteor.user(), post)) {
+    if (Users.can.edit(Meteor.user(), post)) {
       addMediaAfterSubmit(post);
     }
   }

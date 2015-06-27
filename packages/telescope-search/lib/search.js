@@ -1,15 +1,21 @@
 // push "search" template to primaryNav
-primaryNav.push({
+Telescope.modules.add("primaryNav", {
   template: 'search',
   order: 100
 });
 
-adminMenu.push({
+Telescope.modules.add("mobileNav", {
+  template: 'search',
+  order: 1
+});
+
+Telescope.modules.add("adminMenu", {
   route: 'searchLogs',
   label: 'search_logs',
   description: 'see_what_people_are_searching_for'
 });
 
+Telescope.colorElements.add('.search .search-field', 'secondaryContrastColor');
 
 Searches = new Meteor.Collection("searches", {
   schema: new SimpleSchema({
@@ -28,18 +34,18 @@ Searches = new Meteor.Collection("searches", {
 
 Meteor.startup(function() {
   Searches.allow({
-    update: isAdminById
-  , remove: isAdminById
+    update: Users.is.adminById
+  , remove: Users.is.adminById
   });
 });
 
 // search post list parameters
-viewParameters.search = function (terms, baseParameters) {
+Posts.views.add("search", function (terms, baseParameters) {
   // if query is empty, just return parameters that will result in an empty collection
   if(typeof terms.query === 'undefined' || !terms.query)
-    return {find:{_id: 0}}
+    return {find:{_id: 0}};
 
-  var parameters = deepExtend(true, baseParameters, {
+  var parameters = Telescope.utils.deepExtend(true, baseParameters, {
     find: {
       $or: [
         {title: {$regex: terms.query, $options: 'i'}},
@@ -49,4 +55,4 @@ viewParameters.search = function (terms, baseParameters) {
     }
   });
   return parameters;
-}
+});

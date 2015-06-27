@@ -1,25 +1,26 @@
 serveAPI = function(limitSegment){
   var posts = [];
-  var limit = typeof limitSegment === 'undefined' ? 20 : limitSegment // default limit: 20 posts
+  var limit = isNaN(limitSegment) ? 20 : limitSegment; // default limit: 20 posts
 
-  Posts.find({status: STATUS_APPROVED}, {sort: {postedAt: -1}, limit: limit}).forEach(function(post) {
-    var url = getPostLink(post);
+  Posts.find({status: Posts.config.STATUS_APPROVED}, {sort: {postedAt: -1}, limit: limit}).forEach(function(post) {
+    var url = Posts.getLink(post);
     var properties = {
-     title: post.title,
-     headline: post.title, // for backwards compatibility
-     author: post.author,
-     date: post.postedAt,
-     url: url,
-     guid: post._id
+      title: post.title,
+      headline: post.title, // for backwards compatibility
+      author: post.author,
+      date: post.postedAt,
+      url: url,
+      guid: post._id
     };
 
     if(post.body)
       properties.body = post.body;
 
     if(post.url)
-      properties.domain = getDomain(url);
+      properties.domain = Telescope.utils.getDomain(url);
 
-    if(twitterName = getTwitterNameById(post.userId))
+    var twitterName = Users.getTwitterNameById(post.userId);
+    if(twitterName)
       properties.twitterName = twitterName;
 
     var comments = [];
@@ -45,7 +46,7 @@ serveAPI = function(limitSegment){
         if (parent) {
           parent.replies = parent.replies || [];
           parent.replies.push(JSON.parse(JSON.stringify(comment)));
-          commentsToDelete.push(index)
+          commentsToDelete.push(index);
         }
       }
     });

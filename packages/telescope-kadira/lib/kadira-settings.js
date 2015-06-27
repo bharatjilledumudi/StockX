@@ -1,26 +1,27 @@
 var kadiraAppIdProperty = {
-  propertyName: 'kadiraAppId',
-  propertyGroup: 'kadira',
-  propertySchema: {
+  fieldName: "kadiraAppId",
+  propertyGroup: "kadira",
+  fieldSchema: {
     type: String,
     optional: true,
     autoform: {
-      group: 'kadira'
+      group: "kadira"
     }
   }
-}
-addToSettingsSchema.push(kadiraAppIdProperty);
+};
+Settings.addField(kadiraAppIdProperty);
 
 var kadiraAppSecretProperty = {
-  propertyName: 'kadiraAppSecret',
-  propertyGroup: 'kadira',
-  propertySchema: {
+  fieldName: "kadiraAppSecret",
+  propertyGroup: "kadira",
+  fieldSchema: {
     type: String,
     optional: true,
+    private: true,
     autoform: {
-      group: 'kadira',
-      private: true
+      group: "kadira",
+      class: "private-field"
     }
   }
-}
-addToSettingsSchema.push(kadiraAppSecretProperty);
+};
+Settings.addField(kadiraAppSecretProperty);

@@ -4,7 +4,7 @@ Meteor.startup(function () {
     name: 'campaign',
     where: 'server',
     action: function() {
-      var campaign = buildCampaign(getCampaignPosts(getSetting('postsPerNewsletter', 5)));
+      var campaign = buildCampaign(getCampaignPosts(Settings.get('postsPerNewsletter', 5)));
       var campaignSubject = '<div class="campaign-subject"><strong>Subject:</strong> '+campaign.subject+' (note: contents might change)</div>';
       var campaignSchedule = '<div class="campaign-schedule"><strong>Scheduled for:</strong> '+ Meteor.call('getNextJob') +'</div>';
 
@@ -17,12 +17,12 @@ Meteor.startup(function () {
     name: 'digestConfirmation',
     where: 'server',
     action: function() {
-      var confirmationHtml = getEmailTemplate('emailDigestConfirmation')({
+      var confirmationHtml = Telescope.email.getTemplate('emailDigestConfirmation')({
         time: 'January 1st, 1901',
         newsletterLink: 'http://example.com',
         subject: 'Lorem ipsum dolor sit amet'
       });
-      this.response.write(buildEmailTemplate(confirmationHtml));
+      this.response.write(Telescope.email.buildTemplate(confirmationHtml));
       this.response.end();
     }
   });

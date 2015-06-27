@@ -13,7 +13,7 @@ describe('test nav template', function() {
   });
 
   var render = function () {
-    Blaze.render(Template[getTemplate('nav')], $div.get(0));
+    Blaze.render(Template.nav, $div.get(0));
   };
 
   it('should render mobile menu button', function () {
@@ -27,7 +27,7 @@ describe('test nav template', function() {
   });
 
   it('should render the logo from the setting', function () {
-    spyOn(window, 'getSetting').and.callFake(function (settingName) {
+    spyOn(window, 'Settings.get').and.callFake(function (settingName) {
       return settingName;
     });
 
@@ -44,7 +44,7 @@ describe('test nav template', function() {
   });
 
   it('should render the site title if logo_url setting is empty', function () {
-    spyOn(window, 'getSetting').and.callFake(function (settingName) {
+    spyOn(window, 'Settings.get').and.callFake(function (settingName) {
       if (settingName === 'logoUrl') {
         return null;
       }
